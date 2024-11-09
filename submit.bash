@@ -20,12 +20,12 @@ function submit() {
 
     new_message="submit-$next_submit_num"
 
-    if ! git commit --amend -m "$new_message"; then
-        echo "Erreur : Échec de la création du commit '$new_message'."
-        return 1
-    fi
+    # if ! git commit --amend -m "$new_message"; then
+    #    echo "Erreur : Échec de la création du commit '$new_message'."
+    #    return 1
+    # fi
 
-    if ! git tag -a "$new_message" -m "$new_message"; then
+    if ! git tag -ma "$new_message" -m "$new_message"; then
         echo "Erreur : Échec de la création du tag '$new_message'."
         return 1
     fi

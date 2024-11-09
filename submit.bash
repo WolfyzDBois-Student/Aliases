@@ -10,10 +10,6 @@ function submit() {
         return 1
     fi
 
-    if ! git add -A; then
-        echo "Erreur : Échec de l'ajout des fichiers avec git add."
-        return 1
-    fi
 
     last_submit_num=$(git log --oneline | grep -Eo 'submit-[0-9]+' | grep -Eo '[0-9]+' | sort -n | tail -1)
     if [ -z "$last_submit_num" ]; then
@@ -24,7 +20,7 @@ function submit() {
 
     new_message="submit-$next_submit_num"
 
-    if ! git commit -m "$new_message"; then
+    if ! git commit --amend -m "$new_message"; then
         echo "Erreur : Échec de la création du commit '$new_message'."
         return 1
     fi

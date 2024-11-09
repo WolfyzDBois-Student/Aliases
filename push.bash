@@ -1,28 +1,26 @@
-
 function push() {
     if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
         echo "Erreur : Cette commande doit être exécutée dans un dépôt Git."
         return 1
     fi
 
+    last_push_num=$(git log --oneline | grep -Eo 'push-[0-9]+' | grep -Eo '[0-9]+' | sort -n | tail -1)
+    if [ -z "$last_push_num" ]; then
+        next_push_num=1
+    else
+        next_push_num=$((last_push_num + 1))
+    fi
+
+    new_message="push-$next_push_num"
+
+
     if ! git add -A; then
         echo "Erreur : Échec de l'ajout des fichiers avec git add."
         return 1
     fi
 
-    if ! git commit -m "tempory message for commit"; then
-        echo "Erreur : Échec de la création du commit temporaire."
-        return 1
-    fi
-
-    commit_id=$(git rev-parse --short HEAD)
-    if [ -z "$commit_id" ]; then
-        echo "Erreur : Impossible de récupérer l'ID du commit."
-        return 1
-    fi
-
-    if ! git commit --amend -m "$commit_id"; then
-        echo "Erreur : Échec de la modification du message du commit."
+    if ! git commit -m "$new_message"; then
+        echo "Erreur : Échec de la création commit."
         return 1
     fi
 
@@ -33,5 +31,3 @@ function push() {
 
     echo "Succès : Commit '$commit_id' créé et poussé avec succès."
 }
-
-

@@ -5,12 +5,13 @@ To edit and create aliases, we will edit the bashrc file.
 ```bash
 nano ~/.bashrc
 ```
+You can do the same with zsh.
 
 ## push
 
 1. Check if we are in a git repository
 2. Git add -A
-3. Git commit , with the commit ID as the message
+3. Git commit "push" followed by the push number
 6. Push
 
 ## archi

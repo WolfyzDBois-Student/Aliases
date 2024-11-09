@@ -4,27 +4,22 @@ function archi() {
         return 1
     fi
 
-    last_archi_num=$(git log --oneline | grep -Eo 'archi-[0-9]+' | grep -Eo '[0-9]+' | sort -n | tail -1)
-    if [ -z "$last_archi_num" ]; then
-        next_archi_num=1  
-    else
-        next_archi_num=$((last_archi_num + 1))  
-    fi
-
-    new_message="archi-$next_archi_num"
-
     if ! git add -A; then
         echo "Erreur : Échec de l'ajout des fichiers avec git add."
         return 1
     fi
 
-    if ! git commit -m "$new_message"; then
-        echo "Erreur : Échec de la création commit."
-        return 1
+    last_archi_num=$(git tag | grep -Eo '^archi-[0-9]+' | grep -Eo '[0-9]+' | sort -n | tail -1)
+    if [ -z "$last_archi_num" ]; then
+        next_archi_num=1
+    else
+        next_archi_num=$((last_archi_num + 1))
     fi
 
-    if ! git tag -a "$new_message" -m "$new_message"; then
-        echo "Erreur : Échec de la création du tag."
+    new_message="archi-$next_archi_num"
+
+    if ! git tag -ma "$new_message"; then
+        echo "Erreur : Échec de la création du tag '$new_message'."
         return 1
     fi
 

@@ -1,4 +1,4 @@
-clone() {
+create () {
     if [[ -z "$1" ]]; then
         echo "Erreur : Veuillez fournir un lien pour cloner."
         return 1

@@ -13,6 +13,9 @@ nano ~/.bashrc
 ```
 You can do the same with zsh.
 
+> [!WARNING]
+`push`, `archi` and `submit` don't work for more than 9 uses, a fix is ​​coming
+
 ## push
 
 1. Check if we are in a git repository

@@ -55,4 +55,5 @@ It's ready to use!
 > Upcoming feature:
 > - Start which creates a .gitignore file according to the classic architecture, and a classic README file (if is possible)
 > - Continue which does a git pull and opens rider (if is possible)
+> - Extraction & Execution of an .AppImage app
 

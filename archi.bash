@@ -9,16 +9,21 @@ function archi() {
         return 1
     fi
 
-    last_archi_num=$(git tag | grep -Eo '^archi-[0-9]+' | grep -Eo '[0-9]+' | sort -n | tail -1)
+    last_archi_num=$(git tag | grep -Eo '^archi-[0-9]{4}' | grep -Eo '[0-9]{4}' | sort -n | tail -1)
     if [ -z "$last_archi_num" ]; then
         next_archi_num=1
     else
-        next_archi_num=$((last_archi_num + 1))
+        next_archi_num=$((10#$last_archi_num + 1))
     fi
 
-    new_message="archi-$next_archi_num"
+    new_message=$(printf "archi-%04d" "$next_archi_num")
 
-    if ! git tag -ma "$new_message"; then
+    if ! git commit -m "$new_message"; then
+        echo "Erreur : Échec de la création du commit."
+        return 1
+    fi
+
+    if ! git tag -ma "$new_message" -m "$new_message"; then
         echo "Erreur : Échec de la création du tag '$new_message'."
         return 1
     fi

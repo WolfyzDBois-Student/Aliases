@@ -1,4 +1,4 @@
-# Alias
+# Aliases
 > [!IMPORTANT]
 > If you don't know what "moulinette" is then this repo won't be of much use to you.
 
@@ -6,21 +6,54 @@
 > Everything has been tested, however, unexpected behaviors in particular situations may have escaped us.
 > If you find a bug or have ideas, open an Issue/PR
 
+## How to use aliases
 
-To edit and create aliases, we will edit the bashrc file. 
+An alias is a shortcut that allows you to make several specific requests in one, which makes your life easier.
+
+To create your aliases:
+1. Open your configuration file (typically `bashrc` or `zshrc`), with VIM for example:
 ```bash
 nano ~/.bashrc
 ```
-You can do the same with zsh.
+2. Copy and paste the contents of the .bash file at the end of your configuration file
+3. Save the contents (`Escape` then the `:x` command on VIM)
+4. Launch a new terminal. You may need to reload the configuration.
+```bash
+source ~/.bashrc
+```
 
-> [!WARNING]
-`push`, `archi` and `submit` don't work for more than 9 uses, a fix is ​​coming
+## create
+
+### Usage
+```bash
+$ create link-from-repo-to-clone
+```
+
+1. Clone your repositorie
+2. Navigating to the corresponding folder
+3. Create `README` file with content
+4. Create `.gitignore` file with the provided .gitignore template
+5. Git status
+
+### Content of .gitignore
+```bash
+bin/
+obj/
+.idea/
+*~
+*.DotSettings.user
+*.txt
+*.json
+```
+
+> [!NOTE]
+> Do not hesitate to check that the contents of the .gitignore have not changed. This gitignore is the one provided in the C# language TPs.
 
 ## push
 
 1. Check if we are in a git repository
 2. Git add -A
-3. Git commit "push-" followed by the push number (1 if first push, 2 if second push, etc.)
+3. Git commit "push-" followed by the push number (0001 if first push, 0002 if second push, etc.)
 4. Push
 
 ## archi
@@ -44,19 +77,11 @@ You can do the same with zsh.
 > The code checks if an archi tag has been made before, however, ALWAYS check!!! that you have not made any changes since (even if the command is supposed to protect you from that) and ALWAYS check that your archi tag has passed
 
 
-## Save and reload
-
-Quit vim by pressing "escape" then `:x` to save. 
-Then reload the configuration with this command : 
-```bash
-source ~/.bashrc
-```
-
-It's ready to use! 
+## Contributors
+- [WolfyzDBois](https://github.com/WolfyzDev)
+- [Chefmine8](https://github.com/Chefmine8)
 
 > [!TIP]
 > Upcoming feature:
-> - Start which creates a .gitignore file according to the classic architecture, and a classic README file (if is possible)
 > - Continue which does a git pull and opens rider (if is possible)
 > - Extraction & Execution of an .AppImage app
-

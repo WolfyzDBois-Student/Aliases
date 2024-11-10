@@ -4,15 +4,14 @@ function push() {
         return 1
     fi
 
-    last_push_num=$(git log --oneline | grep -Eo 'push-[0-9]+' | grep -Eo '[0-9]+' | sort -n | tail -1)
+    last_push_num=$(git log --oneline | grep -Eo 'push-[0-9]{4}' | grep -Eo '[0-9]{4}' | sort -n | tail -1)
     if [ -z "$last_push_num" ]; then
         next_push_num=1
     else
-        next_push_num=$((last_push_num + 1))
+        next_push_num=$((10#$last_push_num + 1))
     fi
 
-    new_message="push-$next_push_num"
-
+    new_message=$(printf "push-%04d" "$next_push_num")
 
     if ! git add -A; then
         echo "Erreur : Échec de l'ajout des fichiers avec git add."
@@ -20,7 +19,7 @@ function push() {
     fi
 
     if ! git commit -m "$new_message"; then
-        echo "Erreur : Échec de la création commit."
+        echo "Erreur : Échec de la création du commit."
         return 1
     fi
 
@@ -29,5 +28,5 @@ function push() {
         return 1
     fi
 
-    echo "Succès : Commit '$commit_id' créé et poussé avec succès."
+    echo "Succès : Commit '$new_message' créé et poussé avec succès."
 }

@@ -1,4 +1,4 @@
-create () {
+function create () {
     if [[ -z "$1" ]]; then
         echo "Erreur : Veuillez fournir un lien pour cloner."
         return 1
@@ -22,10 +22,10 @@ create () {
     cd "$repo_name" || return 1
     echo "Navigué dans le dossier $repo_name."
 
-    echo "Bienvenue dans le projet $repo_name !" > README
+    echo "Bienvenue dans le projet $repo_name !" >README
     echo "Fichier README créé."
 
-    cat <<EOL > .gitignore
+    cat <<EOL >.gitignore
 bin/
 obj/
 .idea/
@@ -37,6 +37,5 @@ EOL
     echo "Fichier .gitignore créé."
 
     echo "Le dépôt a été cloné et les fichiers README et .gitignore ont été créés."
+    git status
 }
-
-clone "$1"

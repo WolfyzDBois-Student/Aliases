@@ -2,10 +2,6 @@
 > [!IMPORTANT]
 > If you don't know what "moulinette" is then this repo won't be of much use to you.
 
-> [!TIP]
-> Everything has been tested, however, unexpected behaviors in particular situations may have escaped us.
-> If you find a bug or have ideas, open an Issue/PR
-
 ## How to use aliases
 
 An alias is a shortcut that allows you to make several specific requests in one, which makes your life easier.
@@ -81,11 +77,10 @@ obj/
 > The code checks if an archi tag has been made before, however, ALWAYS check!!! that you have not made any changes since (even if the command is supposed to protect you from that) and ALWAYS check that your archi tag has passed
 
 
-## Contributors
-- [WolfyzDBois](https://github.com/WolfyzDev)
-- [Chefmine8](https://github.com/Chefmine8)
-
-
 ## Upcoming feature:
 - Continue which does a git pull and opens rider (if is possible)
 - Extraction & Execution of an .AppImage app
+
+> [!TIP]
+> Everything has been tested, however, unexpected behaviors in particular situations may have escaped us.
+> If you find a bug or have ideas, open an Issue/PR

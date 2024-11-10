@@ -22,6 +22,10 @@ nano ~/.bashrc
 source ~/.bashrc
 ```
 
+> [!WARNING]
+> There may be issues depending on your operating system (e.g. between zsh and bashrc). Checks are made to see if there are differences, and in this case we will add files according to the versions.
+
+
 ## create
 
 ### Usage
@@ -81,7 +85,7 @@ obj/
 - [WolfyzDBois](https://github.com/WolfyzDev)
 - [Chefmine8](https://github.com/Chefmine8)
 
-> [!TIP]
-> Upcoming feature:
-> - Continue which does a git pull and opens rider (if is possible)
-> - Extraction & Execution of an .AppImage app
+
+## Upcoming feature:
+- Continue which does a git pull and opens rider (if is possible)
+- Extraction & Execution of an .AppImage app

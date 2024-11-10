@@ -1,29 +1,29 @@
 function create () {
     if [[ -z "$1" ]]; then
-        echo "Erreur : Veuillez fournir un lien pour cloner."
+        echo -e "\033[0;31mError: Please provide a link to clone.\033[0m"
         return 1
     fi
 
-    echo "Clonage du dépôt depuis le lien : $1"
+    echo -e "\033[0;34mClonage du dépôt depuis le lien : $1\033[0m"
     git clone "$1"
     if [[ $? -ne 0 ]]; then
-        echo "Erreur : Échec du clonage."
+        echo -e "\033[0;31mError: Cloning failed.\033[0m"
         return 1
     fi
 
     local repo_name=$(basename "$1" .git)
-    echo "Nom du dossier du dépôt : $repo_name"
+    echo -e "\033[0;34mRepository folder name: $repo_name\033[0m"
 
     if [[ ! -d "$repo_name" ]]; then
-        echo "Erreur : Le dossier $repo_name n'existe pas."
+        echo -e "\033[0;31mError: The folder $repo_name does not exist.\033[0m"
         return 1
     fi
 
     cd "$repo_name" || return 1
-    echo "Navigué dans le dossier $repo_name."
+    echo -e "\033[0;34mNavigated to the $repo_name folder.\033[0m"
 
-    echo "Bienvenue dans le projet $repo_name !" >README
-    echo "Fichier README créé."
+    echo "Welcome in the project $repo_name !" >README
+    echo -e "\033[0;34mREADME file created.\033[0m"
 
     cat <<EOL >.gitignore
 bin/
@@ -34,8 +34,8 @@ obj/
 *.txt
 *.json
 EOL
-    echo "Fichier .gitignore créé."
+    echo -e "\033[0;34m.gitignore file created.\033[0m"
 
-    echo "Le dépôt a été cloné et les fichiers README et .gitignore ont été créés."
+    echo -e "\033[0;32mThe repository has been cloned and README and .gitignore files have been created.\033[0m"
     git status
 }

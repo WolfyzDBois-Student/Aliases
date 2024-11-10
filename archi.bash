@@ -1,11 +1,11 @@
 function archi() {
     if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-        echo "Erreur : Cette commande doit être exécutée dans un dépôt Git."
+        echo -e "\033[0;31mError: This command must be executed in a Git repository.\033[0m"
         return 1
     fi
 
     if ! git add -A; then
-        echo "Erreur : Échec de l'ajout des fichiers avec git add."
+        echo -e "\033[0;31mError: Failed to add files with git add.\033[0m"
         return 1
     fi
 
@@ -19,19 +19,19 @@ function archi() {
     new_message=$(printf "archi-%04d" "$next_archi_num")
 
     if ! git commit -m "$new_message"; then
-        echo "Erreur : Échec de la création du commit."
+        echo -e "\033[0;31mError: Failed to create commit.\033[0m"
         return 1
     fi
 
     if ! git tag -ma "$new_message" -m "$new_message"; then
-        echo "Erreur : Échec de la création du tag '$new_message'."
+        echo -e "\033[0;31mError: Failed to create tag'$new_message'.\033[0m"
         return 1
     fi
 
     if ! git push --follow-tags; then
-        echo "Erreur : Échec du push des commits et des tags."
+        echo -e "\033[0;31mError: Failed to push commits and tags.\033[0m"
         return 1
     fi
 
-    echo "Succès : Commit et tag '$new_message' créés et poussés avec succès."
+    echo -e "\033[0;32mSuccess: Commit and tag '$new_message' created and pushed successfully.\033[0m"
 }

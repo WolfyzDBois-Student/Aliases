@@ -84,3 +84,10 @@ obj/
 > [!TIP]
 > Everything has been tested, however, unexpected behaviors in particular situations may have escaped us.
 > If you find a bug or have ideas, open an Issue/PR
+
+## References
+
+https://www.ginkonote.com/fr/utilisateurs/flo/articles/alias-indispensables-pour-linux@debian-server
+
+Documentation : https://doc.ubuntu-fr.org/alias
+https://tutos-gameserver.fr/2019/05/04/30-alias-de-shell-bash-pratiques-pour-linux-unix-mac-os-x-serveur-dimpression/

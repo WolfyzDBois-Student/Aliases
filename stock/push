@@ -1,0 +1,18 @@
+if git log -1 &>/dev/null; then
+  # Extraire le dernier numéro de version du commit
+  last_commit_message=$(git log -1 --pretty=%B)
+  version_number=$(echo "$last_commit_message" | grep -oE 'v[0-9]+' | grep -oE '[0-9]+')
+  new_version=$((version_number + 1))
+else
+  # Aucun commit, donc on commence à la version 1
+  new_version=1
+fi
+
+# Ajouter tous les changements
+git add -A
+
+# Faire un commit avec le message fourni
+git commit -m "v$new_version"
+
+# Pousser les changements sans les tags
+git push

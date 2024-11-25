@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# Vérifier s'il existe des commits précédents pour déterminer la version de commit
+if git log -1 &>/dev/null; then
+  # Extraire le dernier numéro de version du commit
+  last_commit_message=$(git log -1 --pretty=%B)
+  version_number=$(echo "$last_commit_message" | grep -oE 'v[0-9]+' | grep -oE '[0-9]+')
+  new_version=$((version_number + 1))
+else
+  # Aucun commit, donc on commence à la version 1
+  new_version=1
+fi
+
+# Ajouter tous les changements et faire un commit avec le nouveau numéro de version
+git add -A
+git commit -m "v$new_version"
+
+# Vérifier s'il existe un tag précédent au format "archi-*"
+if git describe --tags --match "archi-*" &>/dev/null; then
+  # Extraire le dernier numéro de tag
+  last_tag=$(git describe --tags --match "archi-*" --abbrev=0)
+  tag_number=$(echo "$last_tag" | grep -oE '[0-9]+')
+  new_tag_number=$((tag_number + 1))
+else
+  # Aucun tag, donc on commence à archi-1
+  new_tag_number=1
+fi
+
+# Créer le nouveau tag avec le numéro incrémenté
+new_tag="archi-$new_tag_number"
+git tag -a "$new_tag" -m "$new_tag"
+
+# Pousser les changements et les tags
+git push --follow-tags
+

@@ -1,0 +1,54 @@
+#!/bin/bash
+
+# Fonction clone qui prend un lien en paramètre
+clone() {
+    # Vérifie qu'un lien est fourni
+    if [[ -z "$1" ]]; then
+        echo "Erreur : Veuillez fournir un lien pour cloner."
+        return 1
+    fi
+
+    # Clone le dépôt
+    echo "Clonage du dépôt depuis le lien : $1"
+    git clone "$1"
+    if [[ $? -ne 0 ]]; then
+        echo "Erreur : Échec du clonage."
+        return 1
+    fi
+
+    # Extrait le nom du dépôt à partir du lien
+    local repo_name=$(basename "$1" .git)
+    echo "Nom du dossier du dépôt : $repo_name"
+
+    # Vérifie que le dossier du dépôt existe
+    if [[ ! -d "$repo_name" ]]; then
+        echo "Erreur : Le dossier $repo_name n'existe pas."
+        return 1
+    fi
+
+    # Se déplace dans le dossier du dépôt cloné
+    cd "$repo_name" || return 1
+    echo "Navigué dans le dossier $repo_name."
+
+    # Crée un README.md avec un message de bienvenue
+    echo "Bienvenue dans le projet $repo_name !" > README
+    echo "Fichier README.md créé."
+
+    # Crée un .gitignore avec les règles spécifiées
+    cat <<EOL > .gitignore
+bin/
+obj/
+.idea/
+*~
+*.DotSettings.user
+*.txt
+*.json
+EOL
+    echo "Fichier .gitignore créé."
+
+    echo "Le dépôt a été cloné et les fichiers README et .gitignore ont été créés."
+}
+
+# Appel de la fonction clone avec le premier argument du script
+clone "$1"
+

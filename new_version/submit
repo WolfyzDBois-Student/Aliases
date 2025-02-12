@@ -1,0 +1,41 @@
+#!/bin/bash
+
+# Récupérer le commit actuel
+current_commit=$(git rev-parse HEAD)
+
+# Vérifier le dernier tag archi-* et le commit auquel il est associé
+last_archi_tag=$(git tag --list "archi-*" --sort=-v:refname | head -n 1)
+last_archi_commit=$(git rev-list -n 1 "$last_archi_tag")
+
+# Vérifier que le dernier tag archi-* pointe bien sur le commit actuel
+if [[ "$last_archi_commit" != "$current_commit" ]]; then
+  echo "Erreur : Le dernier tag archi-* ($last_archi_tag) n'est pas sur le commit actuel. Assurez-vous d'être sur la dernière version."
+  exit 1
+fi
+
+# Vérifier que le dernier tag n'est pas un tag submit-*
+last_tag=$(git describe --tags --abbrev=0)
+if [[ "$last_tag" =~ ^submit- ]]; then
+  echo "Erreur : Le dernier tag est un tag submit-* ($last_tag). Un nouveau tag archi-* est requis avant un autre tag submit-*."
+  exit 1
+fi
+
+# Récupérer le dernier tag submit-* s'il existe, et incrémenter
+if git tag | grep -q "^submit-"; then
+  last_submit_tag=$(git tag --list "submit-*" --sort=-v:refname | head -n 1)
+  submit_number=$(echo "$last_submit_tag" | grep -oE '[0-9]+')
+  new_submit_number=$((submit_number + 1))
+else
+  # Aucun tag submit, donc on commence à submit-1
+  new_submit_number=1
+fi
+
+# Créer le nouveau tag submit
+new_submit_tag="submit-$new_submit_number"
+git tag -a "$new_submit_tag" -m "$new_submit_tag"
+
+# Pousser les tags
+git push --follow-tags
+
+echo "Tag $new_submit_tag créé et poussé avec succès."
+
